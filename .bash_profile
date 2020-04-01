@@ -1,0 +1,84 @@
+parse_git_branch
+[[ -s "$HOME/.profile" ]] && source "$HOME/.profile" # Load the default .profile
+
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
+
+
+   export PGHOST="/var/pgsql_socket"
+   export PATH=/opt/apache-maven-3.6.1/bin:$PATH
+
+   export AWS_REGION = "us-east-1"
+   export AWS_PROFILE = "allogy-development"
+
+   alias pg_start="pg_ctl -D /usr/local/var/postgres -l /usr/local/var/postgres/logfile start"
+   alias pg_stop="pg_ctl -D /usr/local/var/postgres stop -s -m fast"
+   #
+  #  # git auto_completion
+  #  source ~/.git-completion.bash
+
+   #Git Aliases
+   alias banana="git stash pop"
+   alias g="git"
+   alias ga="git add "
+   alias gap="git add -p"
+   alias gb="git branch "
+   alias gc="git commit"
+   alias gd="git diff"
+   alias gdc="gd --cached"
+   alias gcl="git clone "
+   alias gco="git checkout "
+   alias gcom="git commit -m "
+   alias gcm="git commit -m"
+   alias gdw="gd --ignore-all-space"
+   alias gl="git log "
+   alias glsha="git show --pretty="format:" --name-only "
+   alias go="git checkout "
+   alias gra="git commit --amend --reset-author --no-edit"
+   alias gs="git status "
+   alias gs="git status "
+   alias gpr="git pull --rebase"
+   alias gpl="git pull "
+   alias gps="git push "
+   alias gra="git remote add "
+   alias grc="git rebase --continue"
+   alias gri="git rebase -i"
+   alias grr="git remote remove "
+   alias grv="git remote -v "
+   alias gsp="git stash pop"
+   alias gsl="git stash list"
+   alias gss="git stash save -u"
+   alias hangon="git stash save -u"
+   # alias hangon="git stash -u"
+   alias just_push="gpr && git push"
+   alias merge="git mergetool"
+   alias unwip="git reset HEAD~"
+
+   alias be="bundle exec"
+   alias build_all="parallel_rspec --nice spec; npm test"
+   alias findlogs="find . -name *.log"
+  #  alias -g G="| grep"
+  #  alias -g C="| pbcopy"
+   alias ll="ls -hal"
+   alias migrape="bin/rake db:migrate db:test:prepare"
+   alias obash="code ~/.bash_profile "
+   alias nuke="rake patient:db:drop patient:db:create patient:db:migrate patient:db:test:prepare db:drop db:create db:migrate db:test:prepare "
+   alias server="foreman start -f Procfile.dev"
+   alias setup_tests="bin/rake parallel:prepare"
+   alias yolo="bin/rake db:drop db:create db:dev_migrate db:test:prepare"
+   alias zmv="noglob zmv -W"
+
+   #### ALIASES
+   #function wtf {echo "ALIAS:"; alias | grep $1; echo "WHENCE: "; whence -vm "*${1}*";}
+   #function funtab {clear; echo -ne "\033]6;1;bg;*;default\a"; echo -ne "\e]1;${2}\a"; $1}
+
+   # Fix for connection to postgres
+  #  export PGHOST=localhost
+
+   # Display git branch in terminal
+   export PS1="\W \[\033[0;33m\]\$(parse_git_branch)➤\[\033[0;39m\] "
+   
+   parse_git_branch() {
+
+     git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
+
+   }
